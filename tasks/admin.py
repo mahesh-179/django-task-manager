@@ -1,3 +1,7 @@
 from django.contrib import admin
-
+from .models import Task
 # Register your models here.
+class AdminTask(admin.ModelAdmin):
+    list_display = ['user','task_name','category','assigned_date','priority']
+
+admin.site.register(Task,AdminTask)
