@@ -85,8 +85,6 @@ django-task-manager/
 │
 ├── templates/
 │
-├── static/
-│
 └── media/
 ```
 
