@@ -21,3 +21,5 @@ def change_status(request,id):
         messages.success(request,"You have completed a task!!!")
     return redirect('home')
 
+
+
