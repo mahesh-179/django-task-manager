@@ -31,11 +31,25 @@ def register_view(request):
         return redirect("home")
     return render(request,"register.html")
 
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 def login_view(request):
-    return render(request,"login.html")
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Successfully logged in!")
+            return redirect("home")
+        else:
+            messages.error(request, "Incorrect username or password.")
+
+    return render(request, "login.html")
 
 def logout_view(request):
     logout(request)
-    messages.success(request,"You have been successfully logged out!!")
     return redirect("login")
