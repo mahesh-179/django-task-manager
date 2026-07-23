@@ -43,8 +43,7 @@ def create_task(request):
 
 
     
-def update_task(request):
-    return render(request,"update.html")
+
 
 
 def profile_pic(request):
@@ -77,5 +76,19 @@ def profile_display(request,id):
     }
     return render(request,"display_profile.html",context=context)
 
+
+def update_task(request,id):
+    task = get_object_or_404(Task,id=id)
+    if request.method=="POST":
+        task.task_name = request.POST.get('task_name')
+        task.category = request.POST.get('category')
+        task.priority = request.POST.get('priority')
+        task.is_completed="is_completed" in request.POST
+        task.save()
+        return redirect("home")
+    context ={
+        "task":task,
+    }
+    return render(request,"update.html",context=context)
 
 
