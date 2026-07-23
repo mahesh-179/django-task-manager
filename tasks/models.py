@@ -27,4 +27,18 @@ class Task(models.Model):
 
     def __str__(self):
         return f"{self.task_name} has been created and is currently in progress {self.priority}"
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name="profile",blank=True,null=True)
+    profile_pic = models.ImageField(upload_to="profile/")
+    full_name = models.CharField(max_length=25)
+    address = models.CharField(max_length=25)
+    bio = models.TextField(max_length=50)
+    phno = models.CharField(max_length=10)
+
+
+
+    def __str__(self):
+        return f"{self.user.username} has created a profile."
     

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Create Task{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0 text-center">Create Profile</h3>
+                </div>
+
+                <div class="card-body">
+
+                   <form action="{% url 'profile_pic' %}" method="POST" enctype='multipart/form-data'>
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <button type="submit" class = "btn btn-primary "> Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

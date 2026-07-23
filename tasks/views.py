@@ -1,7 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import Task
 from django.contrib import messages
-from .models import Task
+from .models import Task,Profile
+from .forms import ProfileCreate
 # Create your views here.
 def home(request):
     if not request.user.is_authenticated:
@@ -29,7 +30,7 @@ def create_task(request):
         priority = request.POST.get('priority')
         is_completed="is_completed" in request.POST
         Task.objects.create(
-            user=request,
+            user=request.user,
             task_name=task_name,
             category=category,
             priority=priority,
@@ -44,5 +45,37 @@ def create_task(request):
     
 def update_task(request):
     return render(request,"update.html")
+
+
+def profile_pic(request):
+        has_profile = Profile.objects.filter(user=request.user).exists()
+        if has_profile:
+             profile = Profile.objects.get(user=request.user)
+             return redirect("profile", profile.id)
+        if request.method == "POST":
+            form = ProfileCreate(request.POST,request.FILES)
+            if form.is_valid():
+                profile = form.save(commit=False)
+                profile.user = request.user
+                profile.save()
+                messages.success(request,"Profile Updated Successfully")
+                return redirect("profile",profile.id)
+        else:
+            form = ProfileCreate()
+        context = {
+            "form":form,
+            "has_profile":has_profile,
+        }
+        return render(request,"create_profiles.html",context=context)
+
+def profile_display(request,id):
+    has_profile = Profile.objects.filter(user=request.user).exists()
+    profile = get_object_or_404(Profile,id=id)
+    context = {
+        "profile":profile,
+        "has_profile":has_profile,
+    }
+    return render(request,"display_profile.html",context=context)
+
 
 
