@@ -47,7 +47,7 @@
 
                     <thead class="table-light">
                         <tr>
-                            <th width="60">#</th>
+                            <th><i class="bi bi-person me-1"> User</th>
                             <th><i class="bi bi-list-task me-1"></i>Task</th>
                             <th><i class="bi bi-tags me-1"></i>Category</th>
                             <th><i class="bi bi-calendar3 me-1"></i>Assigned</th>
@@ -65,7 +65,7 @@
                         <tr class="{% if task.is_completed %}table-info{% else %}table-warning{% endif %}">
 
                             <th scope="row">
-                                {{ forloop.counter }}
+                                {{ user.username }}
                             </th>
 
                             <td>
@@ -100,7 +100,7 @@
 
                             <td class="text-center">
 
-                                <a href="#" class="btn btn-outline-primary btn-sm" title="Update">
+                                <a href="{% url "update" %}" class="btn btn-outline-primary btn-sm" title="Update">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
 
@@ -132,11 +132,6 @@
 
                                     <div class="d-flex align-items-center gap-2">
 
-                                        <input
-                                            class="form-check-input mt-0"
-                                            type="checkbox"
-                                            id="done{{ forloop.counter }}"
-                                            name="is_completed">
 
                                         <button
                                             type="submit"
@@ -178,7 +173,7 @@
                     You haven't created any tasks yet. Start by creating your first task.
                 </p>
 
-                <a href="#" class="btn btn-primary">
+                <a href="{% url "create_task" %}" class="btn btn-primary">
                     <i class="bi bi-plus-circle"></i>
                     Create Task
                 </a>
